@@ -18,5 +18,13 @@ class FirebaseService {
     }).toList();
   }
 
-  // その他、投稿の保存や更新などのメソッドを追加
+  Future<void> addPost(Post post) async {
+    await _firestore.collection('posts').add({
+      'memberName': post.memberName,
+      'wish': post.wish,
+      'originalImageUrl': post.originalImageUrl,
+      'generatedImageUrl': post.generatedImageUrl,
+      'postedDate': post.postedDate,
+    });
+  }
 }

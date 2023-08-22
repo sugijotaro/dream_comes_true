@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dream_comes_true/viewmodels/home_viewmodel.dart';
 import 'package:dream_comes_true/widgets/post_list_item.dart';
 import 'package:dream_comes_true/models/post.dart';
+import 'package:dream_comes_true/views/new_post_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,7 +49,10 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // 新しい投稿画面へ遷移
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NewPostPage()),
+          );
         },
         child: Icon(Icons.add),
       ),
