@@ -47,14 +47,15 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => NewPostPage()),
           );
         },
-        child: Icon(Icons.add),
+        icon: Icon(Icons.add),
+        label: Text("願い事を投稿する"),
       ),
     );
   }
