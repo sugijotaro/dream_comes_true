@@ -47,7 +47,7 @@ class PostListItem extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
         child: Image.network(imageUrl,
             fit: BoxFit.cover,
-            color: Colors.white.withOpacity(0.9),
+            color: Colors.white.withOpacity(0.5),
             colorBlendMode: BlendMode.dstOut),
       ),
     );
