@@ -12,7 +12,7 @@ class FirebaseService {
         memberName: doc['memberName'],
         wish: doc['wish'],
         originalImageUrl: doc['originalImageUrl'],
-        generatedImageUrl: doc['generatedImageUrl'],
+        generatedImageUrl: doc['generatedImageUrl'] ?? null,
         postedDate: (doc['postedDate'] as Timestamp).toDate(),
       );
     }).toList();

@@ -12,7 +12,7 @@ class PostListItem extends StatelessWidget {
       leading: Image.network(post.originalImageUrl),
       title: Text(post.wish),
       subtitle: Text(post.memberName),
-      trailing: Image.network(post.generatedImageUrl),
+      trailing: Image.network(post.generatedImageUrl ?? ''),
     );
   }
 }
