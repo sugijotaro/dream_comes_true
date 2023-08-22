@@ -15,6 +15,7 @@ class _NewPostPageState extends State<NewPostPage> {
   Uint8List? imageBytes;
   TextEditingController wishController = TextEditingController();
   TextEditingController memberNameController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -35,6 +36,32 @@ class _NewPostPageState extends State<NewPostPage> {
     }
   }
 
+  Future<void> upload() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    var metadata = SettableMetadata(
+      contentType: "image/jpeg",
+    );
+    var uploadTask = FirebaseStorage.instance
+        .ref('posts_images/${DateTime.now().toIso8601String()}')
+        .putData(imageBytes!, metadata);
+    var snapshot = await uploadTask.whenComplete(() {});
+    var imageUrl = await snapshot.ref.getDownloadURL();
+
+    Post post = Post(
+      originalImageUrl: imageUrl,
+      wish: wishController.text,
+      memberName: memberNameController.text,
+      postedDate: DateTime.now(),
+      generatedImageUrl: null,
+    );
+
+    await viewModel.uploadPost(post);
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,49 +75,34 @@ class _NewPostPageState extends State<NewPostPage> {
               child: Text('画像を選択'),
             ),
             if (imageBytes != null)
-              Image.memory(imageBytes!, width: 100, height: 100), // 画像のプレビュー
+              Image.memory(imageBytes!, width: 100, height: 100),
             TextField(
               controller: wishController,
               decoration: InputDecoration(labelText: '願い事'),
             ),
             TextField(
               controller: memberNameController,
-              decoration: InputDecoration(labelText: '名前'),
+              decoration: InputDecoration(labelText: 'メンバー・メンター名'),
             ),
+            SizedBox(height: 12),
+            isLoading
+                ? CircularProgressIndicator()
+                : ElevatedButton(
+                    onPressed: () async {
+                      if (imageBytes != null &&
+                          wishController.text.isNotEmpty &&
+                          memberNameController.text.isNotEmpty) {
+                        await upload();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('全てのフィールドを入力してください')),
+                        );
+                      }
+                    },
+                    child: Text('投稿'),
+                  ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          if (imageBytes != null &&
-              wishController.text.isNotEmpty &&
-              memberNameController.text.isNotEmpty) {
-            var metadata = SettableMetadata(
-              contentType: "image/jpeg",
-            );
-            var uploadTask = FirebaseStorage.instance
-                .ref('posts_images/${DateTime.now().toIso8601String()}')
-                .putData(imageBytes!, metadata);
-            var snapshot = await uploadTask.whenComplete(() {});
-            var imageUrl = await snapshot.ref.getDownloadURL();
-
-            Post post = Post(
-              originalImageUrl: imageUrl,
-              wish: wishController.text,
-              memberName: memberNameController.text,
-              postedDate: DateTime.now(),
-              generatedImageUrl: '', // 仮
-            );
-
-            await viewModel.uploadPost(post);
-            Navigator.pop(context);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('全てのフィールドを入力してください')),
-            );
-          }
-        },
-        child: Icon(Icons.save),
       ),
     );
   }
