@@ -1,15 +1,15 @@
 class Post {
-  final String memberId;
+  final String memberName;
   final String wish;
   final String originalImageUrl;
-  final String fulfilledImageUrl;
+  final String generatedImageURL;
   final DateTime postedDate;
 
   Post({
-    required this.memberId,
+    required this.memberName,
     required this.wish,
     required this.originalImageUrl,
-    required this.fulfilledImageUrl,
+    required this.generatedImageURL,
     required this.postedDate,
   });
 }

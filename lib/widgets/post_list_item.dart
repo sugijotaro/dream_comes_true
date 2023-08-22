@@ -11,8 +11,8 @@ class PostListItem extends StatelessWidget {
     return ListTile(
       leading: Image.network(post.originalImageUrl),
       title: Text(post.wish),
-      subtitle: Text(post.memberId),
-      trailing: Image.network(post.fulfilledImageUrl),
+      subtitle: Text(post.memberName),
+      trailing: Image.network(post.generatedImageURL),
     );
   }
 }

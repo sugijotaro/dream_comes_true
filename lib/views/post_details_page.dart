@@ -14,7 +14,7 @@ class PostDetailsPage extends StatelessWidget {
         children: [
           Image.network(post.originalImageUrl),
           Text(post.wish),
-          Text(post.memberId),
+          Text(post.memberName),
         ],
       ),
     );
