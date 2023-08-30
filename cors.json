@@ -1,6 +1,6 @@
 [
   {
-    "origin": ["https://dream-comes-true-d83b7.web.app"],
+    "origin": ["https://dream-comes-true-d83b7.web.app", "https://dream-comes-true-d83b7.firebaseapp.com"],
     "method": ["GET"],
     "maxAgeSeconds": 3600,
     "responseHeader": ["Content-Type", "Authorization", "Accept", "Origin"]
